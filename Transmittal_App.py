@@ -3,25 +3,50 @@
 import datetime
 import os
 import os.path
+import csv
 
 
 
 def getFiles():
-   path = input("Paste in path for outgoing foler: ")
-   numTitleRev = os.listdir(path)
-   fileData = []
-   for item in numTitleRev:
+    path = input("Paste in path for outgoing foler: ")
+    numTitleRev = os.listdir(path)
+    issueRec = []
+    fileData = []
+    for item in numTitleRev:
         fileSplit = item.split(',', 2)
-        fileData.append(fileSplit)
-   print(fileData)
+        fileTitle = fileSplit.pop(2)
+        fileRev = fileSplit.pop(1)
+        fileNum = fileSplit.pop(0)
+              
+    
+    print(fileTitle)
+    print(fileRev)
+    print(fileNum)
+    
+    csvHeaders = [["Number", "Revision", "Title"]]
+    csvOutput  = [[fileNum,fileRev,fileTitle]]
+
+    with open('output.csv', 'r') as csvFile:
+        reader = csv.reader(csvFile)
+        lines = list(reader)
+    
+    with open('output.csv', 'w') as csvHeader:
+        writer = csv.writer(csvHeader)
+        writer.writerows(csvHeaders)
+
+    with open('output.csv', 'a') as writeCSV:
+        writer = csv.writer(writeCSV)
+        writer.writerows(csvOutput)
+             
+    writeCSV.close()
+    csvFile.close()
+   
+    print("Writing complete")
+
+
 
   
-    #fileTitle = fileSplit.pop()
-    #fileRev = fileSplit.pop()
-    #fileNum = fileSplit.pop()
-    #issueRec.append(fileNum)
-    #issueRec.append(fileRev)
-    #issueRec.append(fileTitle)
+    
 
    
 
