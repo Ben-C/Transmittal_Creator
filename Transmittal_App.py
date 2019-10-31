@@ -5,10 +5,15 @@ import os
 import os.path
 import csv
 
-
+def createCSV():
+    csvHeaders = [["Number", "Revision", "Title"]]
+    with open('output.csv', 'wb') as newCSV:
+        filewriter = csv.writer(newCSV, delimiter=',',
+                                quotechar ='|', quoting=csv.QUOTE_MINIMAL)
+        filewriter.writerow(csvHeaders)
 
 def getFiles():
-    path = input("Paste in path for outgoing foler: ")
+    path = input("Paste in path for outgoing folder: ")
     numTitleRev = os.listdir(path)
     issueRec = []
     fileData = []
@@ -19,20 +24,15 @@ def getFiles():
         fileNum = fileSplit.pop(0)
               
     
-    print(fileTitle)
-    print(fileRev)
-    print(fileNum)
+#   print(fileTitle)
+#   print(fileRev)
+#   print(fileNum)
     
-    csvHeaders = [["Number", "Revision", "Title"]]
     csvOutput  = [[fileNum,fileRev,fileTitle]]
 
     with open('output.csv', 'r') as csvFile:
         reader = csv.reader(csvFile)
         lines = list(reader)
-    
-    with open('output.csv', 'w') as csvHeader:
-        writer = csv.writer(csvHeader)
-        writer.writerows(csvHeaders)
 
     with open('output.csv', 'a') as writeCSV:
         writer = csv.writer(writeCSV)
@@ -51,6 +51,7 @@ def getFiles():
    
 
 if __name__=="__main__":
+    createCSV()
     getFiles()
 
 
