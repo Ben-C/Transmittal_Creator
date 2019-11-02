@@ -3,7 +3,9 @@
 import datetime
 import os
 import os.path
+import platform
 import csv
+
 
 def createCSV():
     csvHeaders = [["Number", "Revision", "Title"]]
@@ -11,6 +13,9 @@ def createCSV():
         filewriter = csv.writer(newCSV, delimiter=',',
                                 quotechar ='|', quoting=csv.QUOTE_MINIMAL)
         filewriter.writerow(csvHeaders)
+def osChecker():
+    platformVer = platform.system() + " " + platform.release()
+    print(platformVer)
 
 def getFiles():
     path = input("Paste in path for outgoing folder: ")
@@ -22,12 +27,7 @@ def getFiles():
         fileTitle = fileSplit.pop(2)
         fileRev = fileSplit.pop(1)
         fileNum = fileSplit.pop(0)
-              
-    
-#   print(fileTitle)
-#   print(fileRev)
-#   print(fileNum)
-    
+
     csvOutput  = [[fileNum,fileRev,fileTitle]]
 
     with open('output.csv', 'r') as csvFile:
@@ -44,15 +44,10 @@ def getFiles():
     print("Writing complete")
 
 
-
-  
-    
-
-   
-
 if __name__=="__main__":
-    createCSV()
-    getFiles()
+    osChecker()
+#    createCSV()
+#    getFiles()
 
 
   
