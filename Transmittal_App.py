@@ -40,7 +40,8 @@ def getFiles():
 
         with open('output.csv', 'a') as writeCSV:
             writer = csv.writer(writeCSV)
-            writer.writerows(csvOutput)
+            for row in csvOutput:
+                writer.writerow(row)
         
             i += 1
        
