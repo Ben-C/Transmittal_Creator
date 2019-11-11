@@ -8,46 +8,51 @@ import csv
 
 
 def createCSV():
-    csvHeaders = [["Number", "Revision", "Title"]]
-    with open('output.csv', 'wb') as newCSV:
+    csvHeaders = ["Number", "Revision", "Title"]
+    with open('output.csv', 'w+') as newCSV:
         filewriter = csv.writer(newCSV, delimiter=',',
                                 quotechar ='|', quoting=csv.QUOTE_MINIMAL)
         filewriter.writerow(csvHeaders)
 def osChecker():
     platformVer = platform.system() + " " + platform.release()
-    print(platformVer)
+    print("Your current operating system is: " + platformVer + '\n')
 
 def getFiles():
+    
+    i = 0
     path = input("Paste in path for outgoing folder: ")
     numTitleRev = os.listdir(path)
     issueRec = []
     fileData = []
-    for item in numTitleRev:
-        fileSplit = item.split(',', 2)
-        fileTitle = fileSplit.pop(2)
-        fileRev = fileSplit.pop(1)
-        fileNum = fileSplit.pop(0)
+    totalList = len(numTitleRev)
+    listNumber = str(totalList)
+    print('\n' + "The total amount of documents in this folder is: " + listNumber + '\n')
 
-    csvOutput  = [[fileNum,fileRev,fileTitle]]
+    while i < totalList:
+        for item in numTitleRev:
+            fileSplit = item.split(',', 2)
+            fileTitle = fileSplit.pop(2)
+            fileRev = fileSplit.pop(1)
+            fileNum = fileSplit.pop(0)
 
-    with open('output.csv', 'r') as csvFile:
-        reader = csv.reader(csvFile)
-        lines = list(reader)
+        csvOutput  = [[fileNum,fileRev,fileTitle]]
 
-    with open('output.csv', 'a') as writeCSV:
-        writer = csv.writer(writeCSV)
-        writer.writerows(csvOutput)
-             
+
+        with open('output.csv', 'a') as writeCSV:
+            writer = csv.writer(writeCSV)
+            writer.writerows(csvOutput)
+        
+            i += 1
+       
     writeCSV.close()
-    csvFile.close()
-   
+       
     print("Writing complete")
 
 
 if __name__=="__main__":
     osChecker()
-#    createCSV()
-#    getFiles()
+    createCSV()
+    getFiles()
 
 
   
