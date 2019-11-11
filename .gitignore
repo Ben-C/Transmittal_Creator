@@ -462,4 +462,4 @@ MigrationBackup/
 # End of https://www.gitignore.io/api/python,visualstudio
 
 # Project outputs
-*.csv
+.csv
