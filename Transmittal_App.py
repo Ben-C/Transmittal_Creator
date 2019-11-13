@@ -13,50 +13,41 @@ def createCSV():
         filewriter = csv.writer(newCSV, delimiter=',',
                                 quotechar ='|', quoting=csv.QUOTE_MINIMAL)
         filewriter.writerow(csvHeaders)
+
 def osChecker():
     platformVer = platform.system() + " " + platform.release()
     print("Your current operating system is: " + platformVer + '\n')
 
 def getFiles():
-    
-    i = 0
     path = input("Paste in path for outgoing folder: ")
     numTitleRev = os.listdir(path)
-    issueRec = []
-    fileData = []
-    totalList = len(numTitleRev)
-    listNumber = str(totalList)
-    print('\n' + "The total amount of documents in this folder is: " + listNumber + '\n')
+    print('\n' + "The total amount of documents in this folder is: %s\n" % len(numTitleRev))
+    return numTitleRev
 
-    while i < totalList:
-        for item in numTitleRev:
-            fileSplit = item.split(',', 2)
-            fileTitle = fileSplit.pop(2)
-            fileRev = fileSplit.pop(1)
-            fileNum = fileSplit.pop(0)
+def process_files(filenames):
+    parsed = []
+    for item in filenames:
+        fileNum, fileRev, fileTitle = item.split(',',2)
+        parsed.append([fileNum,fileRev,fileTitle])
+    return parsed
 
-        csvOutput  = [[fileNum,fileRev,fileTitle]]
-
-
-        with open('output.csv', 'a') as writeCSV:
-            writer = csv.writer(writeCSV)
-            for row in csvOutput:
-                writer.writerow(row)
-        
-            i += 1
-       
-    writeCSV.close()
-       
+def write_output(parsed_data):
+    with open('output.csv', 'a') as writeCSV:
+        writer = csv.writer(writeCSV)
+        for row in parsed_data:
+            writer.writerow(row)
     print("Writing complete")
+
+def main():
+    filenames = getFiles()
+    converted = process_files(filenames)
+    write_output(converted)
 
 
 if __name__=="__main__":
     osChecker()
-    createCSV()
-    getFiles()
+    main()
 
-
-  
 #def gui
 #win = Tk()
 #def example():
