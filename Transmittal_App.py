@@ -7,24 +7,30 @@ import platform
 import csv
 
 
-def createCSV():
+def create_CSV():
+    
+    """Creates CSV file for saving outgoing file names."""
+
     csvHeaders = ["Number", "Revision", "Title"]
     with open('output.csv', 'w+') as newCSV:
         filewriter = csv.writer(newCSV, delimiter=',',
                                 quotechar ='|', quoting=csv.QUOTE_MINIMAL)
         filewriter.writerow(csvHeaders)
 
-def osChecker():
+def os_Checker():
+    """As the output.csv writes differently depending on OS (Windows or Linux) an OS checker has been included to keep trackof this."""
     platformVer = platform.system() + " " + platform.release()
     print("Your current operating system is: " + platformVer + '\n')
 
-def getFiles():
+def get_Files():
+    """User to copy and past in file path of documents being issued. The total number of documents in folder will be displayed."""
     path = input("Paste in path for outgoing folder: ")
     numTitleRev = os.listdir(path)
     print('\n' + "The total amount of documents in this folder is: %s\n" % len(numTitleRev))
     return numTitleRev
 
 def process_files(filenames):
+    """This process splits the list created from get_Files() into Number, Revision & Title. This is then created into a new list."""
     parsed = []
     for item in filenames:
         fileNum, fileRev, fileTitle = item.split(',',2)
@@ -32,6 +38,7 @@ def process_files(filenames):
     return parsed
 
 def write_output(parsed_data):
+    """This new list is written to the CSV file."""
     with open('output.csv', 'a') as writeCSV:
         writer = csv.writer(writeCSV)
         for row in parsed_data:
@@ -39,13 +46,15 @@ def write_output(parsed_data):
     print("Writing complete")
 
 def main():
-    filenames = getFiles()
+    """Where the magic happens."""
+    filenames = get_Files()
     converted = process_files(filenames)
     write_output(converted)
 
 
 if __name__=="__main__":
-    osChecker()
+    print(get_Files.__doc__)
+    os_Checker()
     main()
 
 #def gui
