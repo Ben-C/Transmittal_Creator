@@ -81,7 +81,7 @@ class Application(tk.Frame):
 
 def create_CSV():
     """Creates CSV file for saving outgoing file names."""
-    csvExists = os.path.isfile('C://Users/Ben.Crowe/OneDrive - Arup/Documents/GitHub/Transmittal_Creator/output.csv') 
+    csvExists = os.path.isfile('ENTER IN FILE PATH') 
     if csvExists:
         main()
     else:
